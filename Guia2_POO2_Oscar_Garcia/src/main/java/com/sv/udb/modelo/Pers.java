@@ -7,7 +7,7 @@ package com.sv.udb.modelo;
 
 import java.io.Serializable;
 import java.math.BigInteger;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -48,6 +48,14 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Pers.findByFechAlta", query = "SELECT p FROM Pers p WHERE p.fechAlta = :fechAlta"),
     @NamedQuery(name = "Pers.findByFechBaja", query = "SELECT p FROM Pers p WHERE p.fechBaja = :fechBaja")})
 public class Pers implements Serializable {
+    @Basic(optional = false)
+    @NotNull
+    @Lob
+    @Column(name = "FOTO_PERS")
+    private byte[] fotoPers;
+    @Lob
+    @Column(name = "ESTA")
+    private byte[] esta;
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -61,7 +69,7 @@ public class Pers implements Serializable {
     @Column(name = "APEL_PERS", length = 255)
     private String apelPers;
     @Column(name = "GENE_PERS")
-    private Character genePers;
+    private String genePers;
     @Column(name = "FECH_NACI_PERS")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechNaciPers;
@@ -82,9 +90,6 @@ public class Pers implements Serializable {
     @Column(name = "FECH_BAJA")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechBaja;
-    @Lob
-    @Column(name = "ESTA")
-    private byte[] esta;
     @JoinColumn(name = "CODI_TIPO_PERS", referencedColumnName = "CODI_TIPO_PERS")
     @ManyToOne
     private TipoPers tipoPers;
@@ -96,7 +101,7 @@ public class Pers implements Serializable {
     public Pers() {
     }
 
-    public Pers(Long codiPers, String nombPers, String apelPers, Character genePers, Date fechNaciPers, String duiPers, String nitPers, String tipoSangPers, BigInteger codiUbicGeog, Date fechAlta, Date fechBaja, byte[] esta, TipoPers tipoPers, List<Usua> usuaList, List<PersHist> persHistList) {
+    public Pers(Long codiPers, String nombPers, String apelPers, String genePers, Date fechNaciPers, String duiPers, String nitPers, String tipoSangPers, BigInteger codiUbicGeog, Date fechAlta, Date fechBaja, byte[] esta, TipoPers tipoPers, List<Usua> usuaList, List<PersHist> persHistList, byte[] fotoPers) {
         this.codiPers = codiPers;
         this.nombPers = nombPers;
         this.apelPers = apelPers;
@@ -112,6 +117,7 @@ public class Pers implements Serializable {
         this.tipoPers = tipoPers;
         this.usuaList = usuaList;
         this.persHistList = persHistList;
+        this.fotoPers = fotoPers;
     }
     
     public Long getCodiPers() {
@@ -138,11 +144,11 @@ public class Pers implements Serializable {
         this.apelPers = apelPers;
     }
 
-    public Character getGenePers() {
+    public String getGenePers() {
         return genePers;
     }
 
-    public void setGenePers(Character genePers) {
+    public void setGenePers(String genePers) {
         this.genePers = genePers;
     }
 
@@ -202,13 +208,6 @@ public class Pers implements Serializable {
         this.fechBaja = fechBaja;
     }
 
-    public byte[] getEsta() {
-        return esta;
-    }
-
-    public void setEsta(byte[] esta) {
-        this.esta = esta;
-    }
 
     public TipoPers getTipoPers() {
         return tipoPers;
@@ -259,6 +258,22 @@ public class Pers implements Serializable {
     @Override
     public String toString() {
         return "com.sv.udb.modelo.Pers[ codiPers=" + codiPers + " ]";
+    }
+
+    public byte[] getFotoPers() {
+        return fotoPers;
+    }
+
+    public void setFotoPers(byte[] fotoPers) {
+        this.fotoPers = fotoPers;
+    }
+
+    public byte[] getEsta() {
+        return esta;
+    }
+
+    public void setEsta(byte[] esta) {
+        this.esta = esta;
     }
     
 }

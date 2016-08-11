@@ -43,6 +43,14 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "PersHist.findByFechAlta", query = "SELECT p FROM PersHist p WHERE p.fechAlta = :fechAlta"),
     @NamedQuery(name = "PersHist.findByFechBaja", query = "SELECT p FROM PersHist p WHERE p.fechBaja = :fechBaja")})
 public class PersHist implements Serializable {
+    @Basic(optional = false)
+    @NotNull
+    @Lob
+    @Column(name = "FOTO_PERS")
+    private byte[] fotoPers;
+    @Lob
+    @Column(name = "ESTA")
+    private byte[] esta;
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -63,9 +71,6 @@ public class PersHist implements Serializable {
     @Column(name = "FECH_BAJA")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechBaja;
-    @Lob
-    @Column(name = "ESTA")
-    private byte[] esta;
     @JoinColumn(name = "CODI_PERS", referencedColumnName = "CODI_PERS")
     @ManyToOne
     private Pers pers;
@@ -139,13 +144,6 @@ public class PersHist implements Serializable {
         this.fechBaja = fechBaja;
     }
 
-    public byte[] getEsta() {
-        return esta;
-    }
-
-    public void setEsta(byte[] esta) {
-        this.esta = esta;
-    }
 
     public Pers getPers() {
         return pers;
@@ -195,6 +193,22 @@ public class PersHist implements Serializable {
     @Override
     public String toString() {
         return "com.sv.udb.modelo.PersHist[ codiPersHist=" + codiPersHist + " ]";
+    }
+
+    public byte[] getFotoPers() {
+        return fotoPers;
+    }
+
+    public void setFotoPers(byte[] fotoPers) {
+        this.fotoPers = fotoPers;
+    }
+
+    public byte[] getEsta() {
+        return esta;
+    }
+
+    public void setEsta(byte[] esta) {
+        this.esta = esta;
     }
     
 }
